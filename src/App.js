@@ -1,0 +1,12 @@
+import React from 'react'
+
+function App() {
+  // js 코딩자리
+  var test = 1;
+  // return 자리에 html 태그 (jsx) 를 넣어야 함
+  return (
+    <div>App</div>
+  )
+}
+
+export default App
