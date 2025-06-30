@@ -297,13 +297,16 @@ export default App;
    "no-unused-vars": "off"
  }
 ```
+
 ### 5.5. VSCode 프로젝트 세팅
+
 - `.vscode` 폴더 생성하기.
 - `.vscode/settings.json` 파일 생성하기.
+
 ```json
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   }
 }
