@@ -221,7 +221,7 @@ npx eslint --init
 npm i prettier -D
 ```
 
-#### 5.2.2. `.prettierrc.json`
+#### 5.2.2. `.prettierrc.json` 파일 생성
 
 ```json
 {
@@ -243,32 +243,17 @@ npm i prettier -D
 #### 5.3.1. npm 설치
 
 ```bash
-npm i  eslint-config-prettier -D
-npm i  eslint-plugin-prettier -D --force
+npm i eslint-config-prettier -D --force
+npm i eslint-plugin-prettier -D --force
 ```
 
 #### 5.3.2. `.eslintrc.json` 수정
-
+- `.eslintrc.json` 파일에 아래 내용을 추가합니다.
 ```json
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:prettier/recommended"
   ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": ["react"],
-  "rules": {}
 }
 ```
 
