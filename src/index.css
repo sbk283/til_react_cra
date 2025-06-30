@@ -2,8 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  outline-style:  none;
-
+  outline-style: none;
 }
 
 a {
@@ -11,13 +10,16 @@ a {
   color: black;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
 }
 
 html {
-
 }
 body {
-  
+}
+
+.box {
+  background-color: hotpink !important;
 }
