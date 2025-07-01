@@ -1,6 +1,16 @@
 .wrap {
-  display: flex;
+  position: relative;
 }
 .wrap .notice {
-  display: flex;
-} /*# sourceMappingURL=test.css.map */
+  width: 800px;
+  height: 400px;
+}
+.wrap a {
+  display: block;
+}
+.wrap:hover {
+  background-color: red;
+}
+.wrap span {
+  display: block;
+}/*# sourceMappingURL=test.css.map */

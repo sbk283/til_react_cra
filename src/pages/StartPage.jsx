@@ -1,6 +1,7 @@
 import React from "react";
 // css
-import styles from "../css/StartPage.module.css";
+// import styles from "../css/StartPage.module.css";
+import styles from "./StartPage.module.scss"; // scss 파일을 불러옵니다.
 // 컴포넌트
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,7 +9,7 @@ import Slide from "../components/Slide";
 
 function StartPage() {
   return (
-    <>
+    <div className="wrap">
       <div className={styles.box}>로고</div>
       {/* 헤더 컴포넌트 */}
       <Header></Header>
@@ -21,7 +22,7 @@ function StartPage() {
       {/* 앱설치 컴포넌트 */}
       {/* 하단 컴포넌트 */}
       <Footer></Footer>
-    </>
+    </div>
   );
 }
 

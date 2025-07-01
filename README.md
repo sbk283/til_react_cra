@@ -6,16 +6,19 @@
 ## 1. Component 란?
 
 - HTML 태그 형태를 리턴하는 함수
-- 화살표 이든, 일반 함수 이든 `HTML 태그를 리턴`하면 인정.
+- 화살표(`rafce`) 이든, 일반함수(`rfce`) 이든 `HTML 태그를 리턴`하면 인정.
 - JSX 는 `반드시 하나의 태그`에 `포함되도록 배치`하여야 한다.
-- `<></>` 를 Fragment 라고 합니다.
+- `<></>` 를 `Fragment` 라고 합니다.
 - 파일명 및 컴포넌트 함수는 반드시 `파스칼` 이어야 한다.
 
-## 2. Component 와 Page 구분
+## 2. Component 와 Page 폴더 구분(관례상)
 
 - `폴더명은 반드시 소문자`로 하여야 한다.
 - 각 화면단위로 구성한다면 `pages 폴더`에 저장
 - `하나의 html 을 완성하기 위한 배치 요소`라면 `components 폴더`에 저장
+- `/src/components/소문자컴포넌트/대문자컴포넌트.jsx`
+- `/src/components/소문자컴포넌트/대문자컴포넌트.css`
+-
 
 # css
 
@@ -25,6 +28,7 @@
 - css 파일은 모두 이곳에 배치한다.
 - css 파일명은 컴포넌트명과 동일하게 파스칼케이스를 사용한다.
 - 예) Header.css, Footer.css, Slide.css
+- 예) header.css, footer.css, slide.css
 
 ## 2. css 사용하기
 
@@ -124,12 +128,13 @@ import "../css/Slide.css";
 ### 3.2. npm 설치 방식 권장
 
 ```bash
-npm i normalize
-npm i reset-css
-npm install react-icons --save
+npm i normalize --force
+npm i font-awesome --force
+npm i reset-css --force
+npm install react-icons --save --force
 ```
 
-### 3.3. 구글폰트는 `index.css 에서 작성` 권장
+### 3.3. 폰트는 `index.css 에서 작성` 권장
 
 - index.css 에 모든 페이지에 적용되는 기본 파일이므로
 - link 방식 보다는 @import url 방식 권장
@@ -235,3 +240,317 @@ npm i sass -D --force
 
 - src/scss 폴더 생성 권장
 - src/scss/test.scss 파일 생성
+- `Watching Sass...` 실행
+
+### 6.3. 중첩(Nesting)
+
+```scss
+.wrap {
+  position: relative;
+}
+.wrap .notice {
+  width: 800px;
+  height: 400px;
+}
+.wrap a {
+  display: block;
+}
+.wrap:hover {
+  background-color: red;
+}
+.wrap span {
+  display: block;
+}
+```
+
+### 6.4. 변수(Variable)
+
+- 변수는 `$` 를 사용한다.
+- 가능하면 외부파일로 생성하시길 권장
+- 변수만 모은 파일명은 `_파일명.scss` 은 `css 생성을 하지 않는게` 좋다.
+
+```scss
+$width-800: 800px;
+$height-400: 400px;
+$red: red;
+
+.wrap {
+  position: relative;
+  .notice {
+    width: $width-800;
+    height: $height-400;
+  }
+  a {
+    display: block;
+  }
+  &:hover {
+    background-color: $red;
+  }
+  span {
+    display: block;
+  }
+}
+```
+
+- 변수만 모은 `_val.scss`, `_color.scss` 파일 생성
+
+```scss
+// _val.scss
+$width-800: 800px;
+$height-400: 400px;
+
+// _color.scss
+$red: red;
+```
+
+### 6.5. 함수 (mixin)
+
+- `파일명은 _ 붙이고 생성`, css 생성되지 않도록
+- `src/scss/_mixins.scss` 파일 생성
+
+```scss
+@mixin flex-center-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin border-line($num, $cc) {
+  border: $num solid $cc;
+}
+```
+
+```scss
+// test.scss
+@import "val";
+@import "color";
+@import "mixins";
+
+.wrap {
+  position: relative;
+  @include flex-center-center;
+  .notice {
+    @include flex-center-center;
+    @include border-line(5px, red);
+    width: $width-800;
+    height: $height-400;
+  }
+  a {
+    display: block;
+  }
+  &:hover {
+    background-color: $red;
+  }
+  span {
+    display: block;
+  }
+}
+```
+
+### 6.6. `react에서 scss` 쓰기로 했다면?
+
+- 반드시 `npm i sass -D --force` 로 설치가 되었다는 전제로 진행
+- `Watching Sass...` 끄고 작업하기.
+- pages/StartPage.scss 파일 생성
+
+```jsx
+import "./StartPage.scss";
+```
+
+- pages/StartPage`.module.scss` 파일명 수정
+
+```jsx
+import styles from "./StartPage.module.scss";
+
+return (
+  <div className={styles.wrap}>
+    <div className={styles.box}>로고</div>
+  </div>
+);
+```
+
+# JSX 2.
+
+## 1. JSX 에서 변수 사용하기
+
+- 값의 종류 : 글자, 숫자, null, undefined, boolean, [], {}, 함수 등
+- 보간법(`{}`)을 이용하기 : 중괄호 표현법.
+
+```jsx
+import React from "react";
+
+function Header() {
+  // js 코드자리
+  const title = "웹 서비스 제목";
+  const version = "1.0.0";
+
+  function say() {
+    return " 하하하";
+  }
+  // 아래는 html 코드자리
+  return (
+    <div>
+      <div>{title}</div>
+      <div>버전: {version}</div>
+      <div>{say()}</div>
+    </div>
+  );
+}
+
+export default Header;
+```
+
+## 2. style 태그에 `css 객체` 넣기
+
+```js
+import React from "react";
+
+function Header() {
+  // js 코딩자리
+  const title = "웹 서비스 제목";
+  const version = 0.5;
+  function say() {
+    return "하하하";
+  }
+
+  // html jsx 코드 자리
+  return (
+    <div>
+      <div
+        style={{
+          backgroundColor: "green",
+          color: "#fff",
+          border: "5px solid hotpink",
+        }}
+      >
+        {title}
+      </div>
+      <div>
+        버전:{version} {say()}
+      </div>
+    </div>
+  );
+}
+
+export default Header;
+```
+
+- 아래처럼 변수에 담아서 전달하는걸 추천
+
+```js
+import React from "react";
+
+function Header() {
+  // js 코딩자리
+  const title = "웹 서비스 제목";
+  const version = 0.5;
+  function say() {
+    return "하하하";
+  }
+
+  const bgObj = {
+    backgroundColor: "green",
+    color: "#fff",
+    border: "5px solid hotpink",
+  };
+
+  // html jsx 코드 자리
+  return (
+    <div>
+      <div style={bgObj}>{title}</div>
+      <div>
+        버전:{version} {say()}
+      </div>
+    </div>
+  );
+}
+
+export default Header;
+```
+
+- 응용 버전
+
+```jsx
+import React from "react";
+
+function Header() {
+  // js 코딩자리
+  const title = "웹 서비스 제목";
+  const version = 0.5;
+  function say() {
+    return "하하하";
+  }
+
+  const isLogin = true;
+
+  const bgObj = {
+    backgroundColor: "green",
+    color: "#fff",
+    border: "5px solid hotpink",
+  };
+  const bgObjRed = {
+    backgroundColor: "red",
+    color: "#fff",
+    border: "5px solid hotpink",
+  };
+
+  // html jsx 코드 자리
+  return (
+    <div>
+      <div style={isLogin ? bgObj : bgObjRed}>{title}</div>
+      <div>
+        버전:{version} {say()}
+      </div>
+    </div>
+  );
+}
+
+export default Header;
+```
+
+## 3. css 의 객체를 별도로 모아서 관리하기
+
+- 위의 css 객체를 `객체 리터럴 오브젝트 방식` 으로 칭함.
+- 관례상 css 객체는 `파스칼 케이스`를 쓴다.
+- /components/bg.js 파일 생성
+
+```js
+export const BgObj = {
+  backgroundColor: "green",
+  color: "#fff",
+  border: "5px solid hotpink",
+};
+export const BgObjRed = {
+  backgroundColor: "red",
+  color: "#fff",
+  border: "5px solid hotpink",
+};
+```
+
+```jsx
+import React from "react";
+import { BgObj, BgObjRed } from "./bg";
+
+function Header() {
+  // js 코딩자리
+  const title = "웹 서비스 제목";
+  const version = 0.5;
+  function say() {
+    return "하하하";
+  }
+
+  const isLogin = true;
+
+  // html jsx 코드 자리
+  return (
+    <div>
+      <div style={isLogin ? BgObj : BgObjRed}>{title}</div>
+      <div>
+        버전:{version} {say()}
+      </div>
+    </div>
+  );
+}
+
+export default Header;
+```

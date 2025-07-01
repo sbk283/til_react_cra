@@ -1,6 +1,23 @@
+@import "val";
+@import "color";
+@import "mixins";
+
 .wrap {
-  display: flex;
+  position: relative;
+  @include flex-center-center;
   .notice {
-    display: flex;
+    @include flex-center-center;
+    @include border-line(5px, red);
+    width: $width-800;
+    height: $height-400;
+  }
+  a {
+    display: block;
+  }
+  &:hover {
+    background-color: $red;
+  }
+  span {
+    display: block;
   }
 }
