@@ -1,23 +1,19 @@
 import React from "react";
-import BgObjRed, { BgObj } from "./bg";
-
+import "../css/Header.module.css"; // CSS 모듈 사용
 function Header() {
-  // js 코딩자리
+  // js 코드자리
   const title = "웹 서비스 제목";
-  const version = 0.5;
+  const version = "1.0.0";
+
   function say() {
-    return "하하하";
+    return " 하하하";
   }
-
-  const isLogin = true;
-
-  // html jsx 코드 자리
+  // 아래는 html 코드자리
   return (
     <div>
-      <div style={isLogin ? BgObj : BgObjRed}>{title}</div>
-      <div>
-        버전:{version} {say()}
-      </div>
+      <div>{title}</div>
+      <div>버전: {version}</div>
+      <div>{say()}</div>
     </div>
   );
 }
