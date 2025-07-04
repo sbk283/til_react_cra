@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Header.module.css"; // CSS 모듈 사용
+import "../css/Header.css"; // CSS 모듈 사용
 function Header() {
   // js 코드자리
   const title = "웹 서비스 제목";

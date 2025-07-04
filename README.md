@@ -568,5 +568,208 @@ npm install @emotion/react@emotion/styled --force
 
 ## 2.2 왜 필요한가?
 
-- 태그처럼 생겼다.(내가만든 태그)
+- 태그처럼 생겼다.(내가만든 태그: 시멘틱처럼 사용가능)
 - 태그가 내용을 설명하도록 구성한다.
+- css 같이 배치 가능(VSCode 플러그인: `vscode-styled-components`)
+- props 도 전달해서 다양한 결과를 보여줄 수 있다.
+- props 는 객체라서 `.`으로 접근 가능
+- props 는 객체라서 `객체 구조분해 할당` 가능
+- 확장(Extends) 가능
+- export 를 통해서 외부로 내보낼 수 있다.
+- import 해서 사용할 수 있다.
+
+- Emotion 기본형과 props 전달의 예제
+
+```jsx
+import React from "react";
+import "../css/Slide.css";
+import styled from "@emotion/styled";
+function Slide() {
+  // js 자리
+  // Emotion 관련
+  // 기본형
+  const BasicButton = styled.button`
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.5s;
+    /* SCSS 적용 가능 */
+    &:hover {
+      background-color: #0056b3;
+    }
+  `;
+  // css 추가형
+  const BasicUpButton = styled.button`
+    background-color: ${props => props.bg};
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    /* SCSS 적용 가능 */
+    &:hover {
+      background-color: red;
+    }
+  `;
+
+  // props 로 동적인 즉, 실시간 스타일 변경하기
+  const Box = styled.div`
+    background-color: ${props => props.bg};
+    width: ${props => props.width};
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: ${props => props.m}px 0;
+    border: ${props => props.b}px solid yellowgreen;
+  `;
+
+  const LoginBox = styled(Box)`
+    width: 200px;
+    height: 100px;
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    &:hover {
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+  `;
+
+  const LogoutBox = styled(Box)`
+    width: 200px;
+    height: 100px;
+    background-color: #ffcccc;
+    color: #900;
+    font-size: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    &:hover {
+      background-color: #ff9999;
+      cursor: pointer;
+    }
+  `;
+
+  let UserType = false;
+
+  const getLoginUser = () => {
+    if (UserType === true) {
+      alert("이미 로그인 상태입니다.");
+    } else {
+      alert("로그인 완료!");
+    }
+    UserType = true;
+    console.log("로그인 상태:", UserType);
+    return UserType;
+  };
+
+  const getLogoutUser = () => {
+    if (UserType === false) {
+      alert("이미 로그아웃 상태입니다.");
+    } else {
+      alert("로그아웃 완료!");
+    }
+    UserType = false;
+    console.log("로그인 상태:", UserType);
+    return UserType;
+  };
+
+  // jsx 자리
+  return (
+    <div style={{ padding: "30px" }}>
+      <h1>CSS-in-JS 예제</h1>
+      <BasicButton onClick={() => alert("기본버튼 클릭!")}>
+        기본버튼
+      </BasicButton>
+      <br />
+      <br />
+      <BasicUpButton onClick={() => alert("CSS적용버튼 클릭!")}>
+        CSS적용버튼
+      </BasicUpButton>
+      <br />
+      <br />
+      <Box bg="violet" width="300px" b="30" m="50">
+        첫번째 박스
+      </Box>
+      <Box bg="blue" width="600px" b="10" m="100">
+        두번째 박스
+      </Box>
+      <br />
+      <br />
+      <LoginBox onClick={getLoginUser}>로그인 박스</LoginBox>
+      <br />
+      <LogoutBox onClick={getLogoutUser}>로그아웃 박스</LogoutBox>
+      <br />
+      <br />
+      <Box>세번째 박스</Box>
+    </div>
+  );
+}
+
+export default Slide;
+```
+
+- 기본 스타일 확장
+
+```jsx
+import React from "react";
+import "../css/Slide.css";
+import styled from "@emotion/styled";
+function Slide() {
+  // js 자리
+  const BasicButton = styled.button`
+    background-color: orange;
+    font-size: 50px;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    &:hover {
+      background-color: skyblue;
+    }
+  `;
+  const DangerButton = styled(BasicButton)`
+    background-color: red;
+    color: white;
+    &:hover {
+      background-color: darkred;
+    }
+  `;
+  // jsx 자리
+  return (
+    <div style={{ padding: "30px" }}>
+      <h1>CSS-in-JS 예제</h1>
+      <BasicButton onClick={() => alert("버튼 클릭!")}>
+        기본
+        <br />
+        버튼
+      </BasicButton>
+      <DangerButton onClick={() => alert("위험!버튼 클릭!")}>
+        위험한
+        <br />
+        기본
+        <br />
+        버튼
+      </DangerButton>
+    </div>
+  );
+}
+
+export default Slide;
+```
+
+-
+
+```jsx
+
+```
+
+-
