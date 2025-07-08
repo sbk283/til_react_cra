@@ -766,10 +766,856 @@ function Slide() {
 export default Slide;
 ```
 
--
+## 3. 재활용 컴포넌트로 제작하기
 
 ```jsx
+import React from "react";
+import "../css/Slide.css";
+import styled from "@emotion/styled";
+function Slide() {
+  // js 자리
+  const Button = styled.button`
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: ${props => (props.size === "lg" ? "50px" : "25px")};
+    color: #ff00ff;
+    background-color: ${props =>
+      props.variant === "primary" ? "#97c9ff" : "#ff7777"};
+    &&:hover {
+      background-color: ${props =>
+        props.variant === "primary" ? "#0084ff" : "#ff0000"};
+      color: ${props => (props.variant === "primary" ? "#ffffff" : "#000000")};
+    }
+  `;
+  // jsx 자리
+  return (
+    <div style={{ padding: "30px" }}>
+      <h1>CSS-in-JS 예제</h1>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => alert("짱 큰 버튼 클릭!")}
+      >
+        기본버튼 : Large 사이즈
+      </Button>
+      <Button variant="primary" onClick={() => alert("기본 버튼 클릭!")}>
+        기본버튼
+      </Button>
+      <Button
+        variant="danger"
+        size="lg"
+        onClick={() => alert("짱 큰 위험 버튼 클릭!")}
+      >
+        위험 : Large
+      </Button>
+      <Button variant="danger" onClick={() => alert("위험 버튼 클릭!")}>
+        위험
+      </Button>
+    </div>
+  );
+}
+
+export default Slide;
+```
+
+- 3차 최종버전
+- Slide.jsx
+
+```jsx
+import React from "react";
+import "../css/Slide.css";
+import styled from "@emotion/styled";
+import Button from "./ui/Button";
+function Slide() {
+  // js 자리
+  const Button_ = styled.button`
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: ${props => {
+      switch (props.size) {
+        case "lg":
+          return "50px";
+        default:
+          return "25px";
+      }
+    }};
+    color: #ff00ff;
+    background-color: ${props => {
+      switch (props.variant) {
+        case "primary":
+          return "#97c9ff";
+        case "danger":
+          return "#ff7777";
+        default:
+          return "#ffffff";
+      }
+    }};
+    opacity: ${props => (props.disabled ? 0.6 : 1)};
+    &&:hover {
+      background-color: ${props => {
+        switch (props.variant) {
+          case "primary":
+            return "#0084ff";
+          case "danger":
+            return "#ff0000";
+          default:
+            return "#ffffff";
+        }
+      }};
+    }
+  `;
+  // jsx 자리
+  return (
+    <div style={{ padding: "30px" }}>
+      <h1>CSS-in-JS 예제</h1>
+      <Button size="lg" disabled>
+        기본버튼 : Large 사이즈
+      </Button>
+      <Button disabled>기본버튼</Button>
+      <Button size="lg">기본버튼 : Large 사이즈</Button>
+      <Button>기본버튼</Button>
+      <Button variant="primary" size="lg">
+        기본버튼 : Large 사이즈
+      </Button>
+      <Button variant="primary">기본버튼</Button>
+      <Button variant="danger" size="lg">
+        위험 : Large
+      </Button>
+      <Button variant="danger">위험</Button>
+    </div>
+  );
+}
+
+export default Slide;
+```
+
+- Button.jsx
+
+```JSX
+import React from "react";
+import styled from "@emotion/styled";
+
+function Button(props) {
+  const StyledButton = styled.button`
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: ${props => {
+      switch (props.size) {
+        case "lg":
+          return "50px";
+        default:
+          return "25px";
+      }
+    }};
+    color: #ff00ff;
+    background-color: ${props => {
+      switch (props.variant) {
+        case "primary":
+          return "#97c9ff";
+        case "danger":
+          return "#ff7777";
+        default:
+          return "#ffffff";
+      }
+    }};
+    opacity: ${props => (props.disabled ? 0.6 : 1)};
+    &&:hover {
+      background-color: ${props => {
+        switch (props.variant) {
+          case "primary":
+            return "#0084ff";
+          case "danger":
+            return "#ff0000";
+          default:
+            return "#ffffff";
+        }
+      }};
+    }
+  `;
+
+  return (
+    <StyledButton
+      variant={props.variant}
+      size={props.size}
+      disabled={props.disabled}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </StyledButton>
+  );
+}
+
+export default Button;
 
 ```
 
--
+- Button.jsx 업그레이드 버전
+
+```jsx
+import React from "react";
+import styled from "@emotion/styled";
+
+function Button({ children, variant, size, disabled }) {
+  const Button = styled.button`
+    display: flex;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: ${props => {
+      switch (props.size) {
+        case "lg":
+          return "50px";
+        default:
+          return "25px";
+      }
+    }};
+    color: #ff00ff;
+    background-color: ${props => {
+      switch (props.variant) {
+        case "primary":
+          return "#97c9ff";
+        case "danger":
+          return "#ff7777";
+        default:
+          return "#ffffff";
+      }
+    }};
+    opacity: ${props => (props.disabled ? 0.6 : 1)};
+    &&:hover {
+      background-color: ${props => {
+        switch (props.variant) {
+          case "primary":
+            return "#0084ff";
+          case "danger":
+            return "#ff0000";
+          default:
+            return "#ffffff";
+        }
+      }};
+    }
+  `;
+
+  return (
+    <Button variant={variant} size={size} disabled={disabled}>
+      {children}
+    </Button>
+  );
+}
+
+export default Button;
+```
+
+- 응용 예제
+
+```js
+import styled from "@emotion/styled";
+import React from "react";
+
+function Tag({ children, variant = "default", rounded = false, size = "md" }) {
+  // js 자리
+  const StyleTag = styled.span`
+    display: inline-block;
+    background-color: ${props => {
+      switch (props.variant) {
+        case "success":
+          return "#28a745";
+        case "warning":
+          return "#ffc107";
+        case "danger":
+          return "#dc3545";
+        case "info":
+          return "#17a2b8";
+        default:
+          return "#6c757d";
+      }
+    }};
+    color: #fff;
+    border-radius: ${props => (props.rounded ? "10px" : "3px")};
+    padding: ${props => (props.size === "lg" ? "6px 12px" : "4px 8px")};
+    font-size: ${props => (props.size === "lg" ? "14px" : "12px")};
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  `;
+
+  // jsx 자리
+  return (
+    <StyleTag variant={variant} rounded={rounded} size={size}>
+      # {children}
+    </StyleTag>
+  );
+}
+
+export default Tag;
+```
+
+- Avart 예제
+
+```jsx
+import styled from "@emotion/styled";
+import React from "react";
+
+function Avatar({
+  src = "https://i.pravatar.cc/100",
+  alt = "avatar",
+  size = "40px",
+  shadow = true,
+}) {
+  // js 자리
+  const StyledAvatar = styled.img`
+    border-radius: 50%;
+    width: ${props => props.size};
+    height: ${props => props.size};
+    object-fit: cover;
+    border: 3px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, ${props => (props.shadow ? 0.3 : 0)});
+  `;
+
+  // jsx 자리
+  return <StyledAvatar src={src} alt={alt} size={size} shadow={shadow} />;
+}
+
+export default Avatar;
+```
+
+- Toast 샘플
+
+```js
+import styled from "@emotion/styled";
+import React from "react";
+
+function Toast({ message = "Please Message", bg = "#ccc" }) {
+  // js 자리
+  const StyledToast = styled.div`
+    z-index: 999999;
+    position: fixed;
+    bottom: 120px;
+    right: 120px;
+    background-color: ${props => props.bg};
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  `;
+
+  // jsx 자리
+  return <StyledToast bg={bg}>{message}</StyledToast>;
+}
+
+export default Toast;
+```
+
+- Alert 샘플
+
+```js
+import styled from "@emotion/styled";
+import React from "react";
+
+function Alert({ children, type = "default" }) {
+  // js 자리
+  const StyledAlert = styled.div`
+    background-color: ${props => {
+      switch (props.type) {
+        case "success":
+          return "#d4edda";
+        case "error":
+          return "#f8d7da";
+        case "warning":
+          return "#fff3cd";
+        case "info":
+          return "#d1ecf1";
+        default:
+          return "#e2e3e5";
+      }
+    }};
+
+    color: ${props => {
+      switch (props.type) {
+        case "success":
+          return "#155724";
+        case "error":
+          return "#721c24";
+        case "warning":
+          return "#856404";
+        case "info":
+          return "#0c5460";
+        default:
+          return "#383d41";
+      }
+    }};
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+  `;
+
+  // jsx 자리
+  return <StyledAlert type={type}>{children}</StyledAlert>;
+}
+
+export default Alert;
+```
+
+- Chip 예제
+
+```js
+import styled from "@emotion/styled";
+import React from "react";
+
+function Chip({ label = "Label" }) {
+  // js 자리
+  const StyledChip = styled.div`
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: #e0e0e0;
+    border-radius: 16px;
+    font-size: 14px;
+    margin: 4px;
+
+    span {
+      margin-right: 8px;
+    }
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: #555;
+    }
+  `;
+  // jsx 자리
+  return (
+    <StyledChip>
+      <span>{label}</span>
+      <button>x</button>
+    </StyledChip>
+  );
+}
+
+export default Chip;
+```
+
+- Modal 예제
+
+```js
+import styled from "@emotion/styled";
+import React from "react";
+
+function Modal({ children }) {
+  // js 자리
+  const Overlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+
+  const ModalBox = styled.div`
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    min-width: 400px;
+    min-height: 200px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  `;
+  // jsx 자리
+  return (
+    <Overlay>
+      <ModalBox>{children}</ModalBox>
+    </Overlay>
+  );
+}
+
+export default Modal;
+```
+
+- ProgressBar 예제
+
+```jsx
+import styled from "@emotion/styled";
+import React from "react";
+
+function ProgressBar({ percent = 0, color = "#000" }) {
+  // js 자리
+  const BarWrapper = styled.div`
+    background-color: #eee;
+    height: 16px;
+    width: 100%;
+    border-radius: 8px;
+    margin: 10px 0;
+    overflow: hidden;
+  `;
+  const BarInner = styled.div`
+    height: 100%;
+    background-color: ${props => props.color};
+    width: ${props => props.percent}%;
+    transition: all 0.5s;
+  `;
+  // jsx 자리
+  return (
+    <BarWrapper>
+      <BarInner percent={percent} color={color} />
+    </BarWrapper>
+  );
+}
+
+export default ProgressBar;
+```
+
+- Skeleton 예제 : https://cssgradient.io/
+
+```jsx
+import { keyframes } from "@emotion/react";
+import styled from "@emotion/styled";
+import React from "react";
+
+function Skeleton({ width = "100%", height = "20px" }) {
+  // js 코딩자리
+  // keyframes css 애니메이션
+  const mov = keyframes`
+    0% { background-position: -400px 0}
+    100% { background-position: 400px 0}
+  `;
+
+  const SkeletonBox = styled.div`
+    width: ${props => props.width};
+    height: ${props => props.height};
+    border-radius: 4px;
+    background: linear-gradient(90deg, #eeeeee 25%, #dddddd 37%, #eeeeee 63%);
+    background-size: 800px 100%;
+    animation: ${mov} 1.2s infinite linear;
+    margin: 10px 0;
+  `;
+
+  // jsx 코딩자리
+  return <SkeletonBox width={width} height={height} />;
+}
+
+export default Skeleton;
+```
+
+- Tooltip 예제
+
+```jsx
+import styled from "@emotion/styled";
+import React from "react";
+
+function Tooltip({ children, text }) {
+  // js 자리
+  const TooltipWrap = styled.div`
+    position: relative;
+    display: inline-block;
+
+    &:hover .bubble {
+      visibility: visible;
+      opacity: 1;
+    }
+  `;
+
+  const TooltipBubble = styled.div`
+    position: absolute;
+    left: 50%;
+    bottom: 120%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background-color: #333;
+    color: #fff;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  `;
+  // jsx 자리
+  return (
+    <TooltipWrap>
+      {children}
+      <TooltipBubble className="bubble">{text}</TooltipBubble>
+    </TooltipWrap>
+  );
+}
+
+export default Tooltip;
+```
+
+# useState
+
+- 리액트에서 변수를 만드는 법
+- `변수의 값이 변하면 웹브라우저의 화면도 변한다.`
+
+```jsx
+const [변수명, set변수명] = useState(초기값);
+```
+
+# JSX 의 조건문
+
+## 1. 기본 문법
+
+- falshy 한 값 종류 : `false, null, undefined, 0, NaN, ""`
+- if 문
+
+```js
+if (조건) {
+  // 참일때 실행
+} else {
+  // 거짓일때 실행
+}
+```
+
+```js
+if (조건) {
+  // 참일때 실행
+} else if (조건) {
+  // 참일때 실행
+} else {
+  // 거짓일때 실행
+}
+```
+
+- 3항 연산자
+
+```js
+const res = 조건 ? 참일때리턴 : 거짓일때리턴;
+```
+
+- 논리 연산자
+
+```js
+const res = 조건 && 결과 리턴;
+const res = 조건 || 결과 리턴;
+```
+
+```jsx
+isLogin && <div>결과</div>;
+```
+
+- Optional(`?`) Chaining(`.`) : `객체 ?.속성명`
+
+```js
+const user = {
+  age: 10,
+  job: "개발자",
+};
+
+const result = user?.age;
+```
+
+- Null 병합 연산자(`??`) : null 또는 undefined 일때만 기본값 사용
+
+```js
+const result = user?.gogo ?? "없어요";
+```
+
+- switch 문
+
+```js
+switch (결과값) {
+  case 비교값1:
+    // 값1 일때 실행
+    break;
+  case 비교값2:
+    // 값2 일때 실행
+    break;
+  default:
+    break;
+  // 위의 값이 아닐때 실행
+}
+```
+
+## 2. JSX 에서의 활용
+
+- `JS 자리`에 if 문과 switch 문을 사용할 수 있음.
+
+- `JSX 자리`에 if 문과 switch 문을 사용할 수 없음.
+- if 문과 switch 문 대신에 `3 항 연산자`가 가장 많이 사용됨.
+- `JSX 자리`에 falshy 한 값은 출력이 안됩니다.
+
+### 2.1. if 문 활용
+
+```jsx
+import React from "react";
+
+// 파일로 만들지 않은  컴포넌트
+function Hi({ isLogin }) {
+  // js 자리
+  if (isLogin) {
+    return <div>반가워요</div>;
+  }
+  // jsx 자리
+  return <div>안녕</div>;
+}
+
+function Test() {
+  // js 자리
+  // jsx 자리
+  return <Hi isLogin={true}>Test</Hi>;
+}
+
+export default Test;
+```
+
+### 2.2. jsx 에서 3항 연산자
+
+```jsx
+import React from "react";
+
+// 파일로 만들지 않은  컴포넌트
+function Hi({ isLogin }) {
+  // js 자리
+  // jsx 자리
+  return <div>{isLogin ? "반가워요" : "로그인하세요."}</div>;
+}
+
+function Test() {
+  // js 자리
+  // jsx 자리
+  return <Hi isLogin={true}>Test</Hi>;
+}
+
+export default Test;
+```
+
+### 2.3. jsx 에서 && 연산자 활용
+
+```jsx
+import React from "react";
+
+// 파일로 만들지 않은  컴포넌트
+function Hi({ isLogin, msg }) {
+  // js 자리
+  // jsx 자리
+  return (
+    <div>
+      {isLogin ? "반가워요" : "로그인하세요."}
+      <div>{msg && "메시지가 있습니다."}</div>
+    </div>
+  );
+}
+
+function Test() {
+  // js 자리
+  // jsx 자리
+  return (
+    <Hi isLogin={true} msg={"새로운메시지"}>
+      Test
+    </Hi>
+  );
+}
+
+export default Test;
+```
+
+### 2.4. jsx 에서 ?. 연산자 사용
+
+- `객체?.속성명`
+- 객체가 null 이거나 undefined 이면 리액트 오류
+- 복잡한 if문 대신 Optional Chaining(`?.`) 을 사용하면 좋다.
+
+```jsx
+import React from "react";
+
+// 파일로 만들지 않은  컴포넌트
+function Hi({ isLogin, msg, user }) {
+  // js 자리
+  // jsx 자리
+  return (
+    <div>
+      {isLogin ? "반가워요" : "로그인하세요."}
+      <div>{msg && "메시지가 있습니다."}</div>
+      <div>
+        {user?.name} : {user?.age ? user?.age : "나이가 없어요"}
+      </div>
+      <div>
+        {user?.name} : {user?.age || "나이가 없어요"}
+      </div>
+    </div>
+  );
+}
+
+function Test() {
+  // js 자리
+  // jsx 자리
+  return (
+    <Hi isLogin={true} msg={"새로운메시지"} user={{ name: "홍길동" }}>
+      Test
+    </Hi>
+  );
+}
+
+export default Test;
+```
+
+# JSX 의 반복문
+
+## 1. map 의 이해
+
+- 일반적으로 가장 많이 사용함
+- 컴포넌트 또는 html 태그를 반복 출력시 사용
+- 반드시 대상은 `배열` 입니다.
+- 반드시 `key 속성 즉, props` 가 있어야함.
+
+```jsx
+import React, { useState } from "react";
+
+// 파일로 만들지 않은  컴포넌트
+function Hi({ data }) {
+  // js 자리
+  // jsx 자리
+  return <div>안녕 {data?.name}!</div>;
+}
+
+function Test() {
+  // js 자리
+  const [userData, setUserData] = useState([
+    {
+      name: "Hong",
+      age: 20,
+    },
+    {
+      name: "Kim",
+      age: 30,
+    },
+    {
+      name: "Lee",
+      age: 40,
+    },
+    {
+      name: "Song",
+      age: 27,
+    },
+  ]);
+  // jsx 자리
+  return (
+    <div>
+      {userData.map((item, index) => (
+        <Hi key={index} data={item} />
+      ))}
+    </div>
+  );
+}
+
+export default Test;
+```
+
+## 2. filter 의 이해
+
+- 대상은 반드시 `배열` 입니다.
+- 조건에 맞는 요소만 JSX 로 출력가능.
