@@ -20,15 +20,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <Header></Header>
-    <Slide></Slide>
-    <Posts></Posts>
-    <Albums></Albums>
-    <Photos></Photos>
-    <Todos></Todos>
-    <Users></Users>
-    <Comments></Comments>
-    <Footer></Footer>
     <Test></Test>
   </div>,
 );
