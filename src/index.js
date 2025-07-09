@@ -15,11 +15,12 @@ import Slide from "./components/Slide";
 import Footer from "./components/Footer";
 import Test from "./pages/Test";
 import Hi from "./pages/Test";
+import Test2 from "./pages/Test2";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <Test></Test>
+    <Test2></Test2>
   </div>,
 );

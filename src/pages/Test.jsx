@@ -1,25 +1,41 @@
 import React, { useState } from "react";
 
 function Test() {
-  // js 자리
   const [todoList, setTodoList] = useState([]);
   const [text, setText] = useState("");
-  const handleKeyUp = e => {
-    setText(e.target.value);
-    if (e.key === "Enter") {
-      setTodoList([...todoList, e.target.value]);
-      setText("");
-    }
-  };
+
   const handleChange = e => {
     setText(e.target.value);
   };
-  // jsx 자리
+
+  const handleKeyUp = e => {
+    if (e.key === "Enter") {
+      if (!text.trim()) {
+        alert("게시글을 입력해주세요");
+        return;
+      }
+      setTodoList([...todoList, text.trim()]);
+      setText("");
+    }
+  };
+
+  const handleAddClick = () => {
+    if (!text.trim()) {
+      alert("게시글을 입력해주세요");
+      return;
+    }
+    setTodoList([...todoList, text.trim()]);
+    setText("");
+  };
+
   return (
     <div>
       <input
         type="text"
+        value={text}
         onChange={handleChange}
+        onKeyUp={handleKeyUp}
+        placeholder="게시글을 입력하세요"
         style={{
           width: "300px",
           height: "50px",
@@ -34,8 +50,7 @@ function Test() {
         }}
       />
       <button
-        onClick={() => setTodoList([...todoList, text])}
-        onKeyUp={handleKeyUp}
+        onClick={handleAddClick}
         style={{
           width: "100px",
           height: "50px",
