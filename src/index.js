@@ -16,11 +16,12 @@ import Footer from "./components/Footer";
 import Test from "./pages/Test";
 import Hi from "./pages/Test";
 import Test2 from "./pages/Test2";
+import RegisterPage from "./pages/RegisterPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <Test2></Test2>
+    <RegisterPage></RegisterPage>
   </div>,
 );
