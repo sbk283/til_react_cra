@@ -50,9 +50,26 @@ export const CheckBoxLabel = styled.label`
 `;
 
 export const CheckBoxInput = styled.input`
+  appearance: none;
   width: 16px;
   height: 16px;
-  accent-color: hotpink;
+  border: 2px solid hotpink;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &:checked {
+    background-color: hotpink;
+  }
+
+  &:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: -1px;
+    left: 2px;
+  }
 `;
 
 export const SelectGroup = styled.div`
@@ -122,8 +139,8 @@ export const UploadImageGroup = styled.div`
   gap: 8px;
 `;
 export const ImagePreview = styled.img`
-  width: 1000px;
-  height: 1000px;
+  width: 100px;
+  height: 100px;
   border-radius: 8px;
   overflow: hidden;
   object-fit: cover;
@@ -143,4 +160,17 @@ export const ImageUploadLabel = styled.label`
 
 export const ImageUploadButton = styled.input`
   display: none;
+`;
+
+export const DeleteImageButton = styled.button`
+  margin-top: 8px;
+  padding: 4px 12px;
+  background-color: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ff7875;
+  }
 `;

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React from "react";
 import InputUi from "./InputUi";
 import {
   FormContainer,
@@ -20,27 +20,22 @@ import {
   TextAreaGroup,
   TextArea,
   SubmitButton,
+  DeleteImageButton,
 } from "./RegisterForm.styles";
 
-function RegisterForm({ formData, errMessage, onChange, setFormData }) {
-  const handleInterestChange = e => {
-    const { value, checked } = e.target;
-    const newInterests = checked
-      ? [...formData.user_interest, value]
-      : formData.user_interest.filter(i => i !== value);
-
-    setFormData(prev => ({ ...prev, user_interest: newInterests }));
-  };
-  const handlePreviewImg = e => {
-    const file = e.target.files[0];
-    if (file) {
-      const 임시주소 = URL.createObjectURL(file);
-    }
-  };
-
+function RegisterForm({
+  formData,
+  errMessage,
+  handleChange,
+  setFormData,
+  handleCheckboxChange,
+  handlePreviewImg,
+  handleDeleteImage,
+  handleSubmit,
+}) {
   return (
     <FormContainer>
-      <form>
+      <form onSubmit={handleSubmit}>
         <InputUi
           id="user_name"
           type="text"
@@ -48,7 +43,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
           value={formData.user_name}
           placeholder="아이디를 입력하세요."
           label="아이디"
-          onChange={onChange}
+          onChange={handleChange}
         />
         <InputUi
           id="user_email"
@@ -57,7 +52,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
           value={formData.user_email}
           placeholder="이메일을 입력하세요."
           label="이메일"
-          onChange={onChange}
+          onChange={handleChange}
         />
         <InputUi
           id="user_pw"
@@ -66,7 +61,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
           value={formData.user_pw}
           placeholder="비밀번호를 입력하세요."
           label="비밀번호"
-          onChange={onChange}
+          onChange={handleChange}
         />
         <InputUi
           id="user_pw_confirm"
@@ -75,7 +70,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
           value={formData.user_pw_confirm}
           placeholder="비밀번호를 다시 입력하세요."
           label="비밀번호 확인"
-          onChange={onChange}
+          onChange={handleChange}
         />
         <InputUi
           id="user_nickname"
@@ -84,7 +79,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
           value={formData.user_nickname}
           placeholder="닉네임을 입력하세요."
           label="닉네임"
-          onChange={onChange}
+          onChange={handleChange}
         />
         <InputUi
           id="user_birth"
@@ -92,7 +87,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
           name="user_birth"
           value={formData.user_birth}
           label="생년월일"
-          onChange={onChange}
+          onChange={handleChange}
         />
 
         <FormLabel>성별</FormLabel>
@@ -103,7 +98,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
               value={"남성"}
               name="user_gender"
               checked={formData.user_gender === "남성"}
-              onChange={onChange}
+              onChange={handleChange}
             />
             남성
           </RadioLabel>
@@ -113,7 +108,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
               value={"여성"}
               name="user_gender"
               checked={formData.user_gender === "여성"}
-              onChange={onChange}
+              onChange={handleChange}
             />
             여성
           </RadioLabel>
@@ -128,7 +123,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
                 name="user_interest"
                 value={item}
                 checked={formData.user_interest.includes(item)}
-                onChange={handleInterestChange}
+                onChange={handleCheckboxChange}
               />
               {item}
             </CheckBoxLabel>
@@ -137,23 +132,30 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
 
         <FormLabel>거주 지역</FormLabel>
         <SelectGroup>
-          <SelectList id="user_location" name="user_location">
+          <SelectList
+            id="user_location"
+            name="user_location"
+            value={formData.user_location}
+            onChange={handleChange}
+          >
             <SelectOption value="">---지역을 선택해주세요---</SelectOption>
-
             {formData.user_location_default.map((item, index) => (
-              <SelectOption value={`${item}`} key={index}>
+              <SelectOption value={item} key={index}>
                 {item}
               </SelectOption>
             ))}
           </SelectList>
         </SelectGroup>
+
         <FormLabel>프로필 사진</FormLabel>
         <UploadImageGroup>
-          {/* 미리보기 이미지 */}
           {formData.user_image_preview && (
             <ImagePreview src={formData.user_image_preview} />
           )}
           <ImageUploadLabel htmlFor="user_image">이미지 선택</ImageUploadLabel>
+          <ImageUploadLabel type="button" onClick={handleDeleteImage}>
+            이미지 삭제
+          </ImageUploadLabel>
           <ImageUploadButton
             type="file"
             accept="image/*"
@@ -162,6 +164,7 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
             onChange={handlePreviewImg}
           />
         </UploadImageGroup>
+
         <FormLabel>자기소개</FormLabel>
         <TextAreaGroup>
           <TextArea
@@ -169,10 +172,11 @@ function RegisterForm({ formData, errMessage, onChange, setFormData }) {
             id="user_intro"
             rows={10}
             value={formData.user_intro}
-            onChange={onChange}
+            onChange={handleChange}
             placeholder="자기소개를 500자 이상 입력하세요."
           />
         </TextAreaGroup>
+
         <SubmitButton type="submit">회원 가입</SubmitButton>
       </form>
     </FormContainer>
