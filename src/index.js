@@ -17,11 +17,12 @@ import Test from "./pages/Test";
 import Hi from "./pages/Test";
 import Test2 from "./pages/Test2";
 import RegisterPage from "./pages/RegisterPage";
+import Test3 from "./pages/Test3";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <RegisterPage />
+    <Test3 />
   </div>,
 );
