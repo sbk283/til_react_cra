@@ -18,11 +18,12 @@ import Hi from "./pages/Test";
 import Test2 from "./pages/Test2";
 import RegisterPage from "./pages/RegisterPage";
 import Test3 from "./pages/Test3";
+import Todo from "./pages/Todo";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <Test3 />
+    <Todo />
   </div>,
 );
