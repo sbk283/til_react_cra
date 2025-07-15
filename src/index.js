@@ -19,11 +19,13 @@ import Test2 from "./pages/Test2";
 import RegisterPage from "./pages/RegisterPage";
 import Test3 from "./pages/Test3";
 import Todo from "./pages/Todo";
+import App from "./App";
+import TodoList from "./components/ui/TodoList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <Todo />
+    <App />
   </div>,
 );

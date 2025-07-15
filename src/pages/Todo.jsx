@@ -1,15 +1,95 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 
 // 스타일 정의
-const Container = styled.div`
-  max-width: 760px;
-  margin: 30px auto;
-  padding: 15px;
-  background-color: #ffc0c0;
-  border-radius: 12px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+// 별 깜빡이는 애니메이션
+const twinkle = keyframes`
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
 `;
+
+// 별 스타일
+const Star = styled.span`
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: ${twinkle} infinite ease-in-out;
+`;
+
+const Container = styled.div`
+  max-width: 1000px;
+  height: 1000px;
+  margin: 30px auto;
+  padding: 24px;
+
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet,
+    black
+  );
+  background-size: 1000% 1000%;
+  animation: rainbowFlow 15s ease infinite;
+
+  border: 2px solid #ffa4ff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: 20px;
+  text-align: center;
+
+  @keyframes rainbowFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+`;
+// 별 20개 랜덤 생성
+const generateStars = (count = 2000) => {
+  const stars = [];
+  for (let i = 0; i < count; i++) {
+    const top = Math.random() * 200;
+    const left = Math.random() * 100;
+    const size = Math.random() * 3 + 1;
+    const duration = Math.random() * 4 + 2;
+    const delay = Math.random() * 3;
+
+    stars.push(
+      <Star
+        key={i}
+        style={{
+          top: `${top}%`,
+          left: `${left}%`,
+          width: `${size}px`,
+          height: `${size}px`,
+          animationDuration: `${duration}s`,
+          animationDelay: `${delay}s`,
+          opacity: Math.random() * 0.5 + 0.2,
+        }}
+      />,
+    );
+  }
+  return stars;
+};
+
 const Title = styled.h1`
   font-size: 18px;
   text-align: center;
@@ -173,8 +253,12 @@ function Todo() {
       }
     }
   }, []);
+  useEffect(() => {
+    localStorage.setItem("todolist", JSON.stringify(todoList));
+  }, [todoList]);
   return (
     <Container>
+      {generateStars()}
       <Title>Todo 등록</Title>
 
       <Section>
@@ -261,8 +345,6 @@ function Todo() {
               <TodoContent>
                 <strong>{item.id}번 글</strong>
                 <br />
-                {/* id: {item.id} */}
-                <br />
                 <br />
                 title: {item.title}
                 <br />
@@ -279,6 +361,7 @@ function Todo() {
           ))
         )}
       </Section>
+      <h1 style={{ fontSize: "250px" }}>🌜⭐️🌛</h1>
     </Container>
   );
 }
