@@ -18,14 +18,15 @@ import Hi from "./pages/Test";
 import Test2 from "./pages/Test2";
 import RegisterPage from "./pages/RegisterPage";
 import Test3 from "./pages/Test3";
-import Todo from "./pages/Todo";
 import App from "./App";
 import TodoList from "./components/ui/TodoList";
+import Todo from "./pages/todo/Todo";
+import Index from "./pages/todo/Index";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <div className="wrap">
-    <App />
+    <Index />
   </div>,
 );

@@ -343,7 +343,7 @@ function Todo() {
           todoList.map((item, index) => (
             <TodoItem key={item.id}>
               <TodoContent>
-                <strong>{item.id}번 글</strong>
+                <strong>{item.id + 1}번 글</strong>
                 <br />
                 <br />
                 title: {item.title}

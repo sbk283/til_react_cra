@@ -11,6 +11,7 @@ import DetailPage from "./pages/blog/Detail";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Todo from "./pages/Todo";
 
 function App() {
   // js 자리
@@ -54,6 +55,7 @@ function App() {
               <Route path="detail" element={<DetailPage />}></Route>
             </Route>
           </Route>
+          <Route path="/todo/rainbow" element={<Todo />}></Route>
           {/* 잘못된 경로 접근 처리 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
