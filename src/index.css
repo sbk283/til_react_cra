@@ -1,0 +1,33 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+/* 글꼴 설정 */
+/* @font-face {
+  font-family: "ddag";
+  src: url("./assets/ddag.ttf");
+}
+@font-face {
+  font-family: "chab";
+  src: url("./assets/chab.ttf");
+} */
+*/ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline-style: none;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+ul,
+ol {
+  list-style: none;
+}
+html {
+}
+body {
+  font-family: "ddag";
+}
+
+.box {
+  background-color: hotpink !important;
+}
