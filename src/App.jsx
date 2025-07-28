@@ -1,12 +1,14 @@
-import { useReducer } from "react";
-import Counter from "./components/Counter";
+import TodoAdd from "./components/todo/TodoAdd";
+import TodoList from "./components/todo/TodoList";
+import { TodayContextProvider } from "./contexts/TodayContext";
 
 function App() {
   return (
-    <div>
-      <h1>useReducer 예제</h1>
-      <Counter />
-    </div>
+    <TodayContextProvider>
+      <h1>할일 서비스 :Context 와 Reducer 활용</h1>
+      <TodoAdd />
+      <TodoList />
+    </TodayContextProvider>
   );
 }
 

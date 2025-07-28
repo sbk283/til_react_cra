@@ -19,7 +19,40 @@ html {
 body {
   font-family: "ddag";
 }
-
-.box {
-  background-color: hotpink !important;
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+.dark {
+  background-color: #121212;
+  color: #fff;
+}
+.light {
+  background-color: #fff;
+  color: #000;
+}
+.rainbow {
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff7f00,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #4b0082,
+    #9400d3
+  );
+  color: #fff;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
